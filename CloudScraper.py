@@ -14,7 +14,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 def print_banner():
         print('''\nCloudScraper is a tool to search through the source code of websites in order to find cloud resources belonging to a target.
         by Jordan Potti
-        @ok_bye_now\n'''
+        @ok_bye_now
+        Modified version : lutzenfried\n'''
         )
 
 
