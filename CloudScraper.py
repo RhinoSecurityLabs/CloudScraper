@@ -6,6 +6,9 @@ import itertools
 import requests
 import sys
 import re
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 def print_banner():
