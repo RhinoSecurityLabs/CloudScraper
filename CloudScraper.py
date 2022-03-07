@@ -6,12 +6,16 @@ import itertools
 import requests
 import sys
 import re
+#import urllib3
+
+#urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 def print_banner():
         print('''\nCloudScraper is a tool to search through the source code of websites in order to find cloud resources belonging to a target.
         by Jordan Potti
-        @ok_bye_now\n'''
+        @ok_bye_now
+        Modified version : lutzenfried\n'''
         )
 
 
@@ -45,7 +49,7 @@ def start(target):
     print(colored("Beginning search for cloud resources in {}".format(target), color='cyan'))
 
     try:
-        html = requests.get(target, allow_redirects=True, headers=headers, verify=False).text
+        html = requests.get(target, allow_redirects=True, headers=headers, verify=True).text
         links = gather_links(html)
 
     except requests.exceptions.RequestException as e:
@@ -65,7 +69,7 @@ def worker(url):
     '''
     if url.count("/") <= arguments.depth+2:
         try:
-            html = requests.get(url, allow_redirects=True, headers=headers, verify=False).text
+            html = requests.get(url, allow_redirects=True, headers=headers, verify=True).text
             links = gather_links(html)
 
         except requests.exceptions.RequestException as e:
@@ -134,7 +138,7 @@ def parser(links):
         match with the list of cloud domains we are interested in.
     '''
     print(colored('Parsing results...', 'cyan', attrs=['bold']))
-    cloud_domains = ['amazonaws.com', 'digitaloceanspaces.com', 'windows.net', 'storage.googleapis.com', 'aliyuncs.com']
+    cloud_domains = ['amazonaws.com', 'digitaloceanspaces.com', 'windows.net', 'storage.googleapis.com', 'aliyuncs.com', 'bc.googleusercontent.com','appspot.com','run.app','firebaseio.com','cloudfunctions.net','azurewebsites.net','cloudapp.net','cloudapp.azure.com']
     matches = []
 
     [[matches.append(link) for link in links if cloud_domain in link] for cloud_domain in cloud_domains]
